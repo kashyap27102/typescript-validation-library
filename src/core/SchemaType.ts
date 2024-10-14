@@ -131,7 +131,7 @@ export interface EnumSchema extends BaseSchema<ValidEnum> {}
 // Interface for defining a schema for objects
 // Extends `BaseSchema<ValidObject>`, meaning it validates objects
 // Includes a `shape` property that defines the structure of the object and an `extends` method to extend the shape
-export interface ObjectSchema {
+export interface ObjectSchema extends BaseSchema<ValidObject> {
   shape: ValidObject; // Defines the structure of the object schema
   extends: (shape: ValidObject) => ObjectSchema; // Method to extend the object schema with additional fields
   keyof: () => EnumSchema; // Method to get the keys of the object schema

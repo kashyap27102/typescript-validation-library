@@ -7,18 +7,21 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "vite  build",
+    "start": "tsc && node 'dist/example.js'",
     "lint": "eslint 'src/**/*.ts'",
-    "test": "jest",
+    "test": "jest __test__/object.test.ts",
     "prepublishOnly": "npm run build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^29.5.13",
     "@typescript-eslint/eslint-plugin": "^8.4.0",
     "@typescript-eslint/parser": "^8.4.0",
     "eslint": "^9.10.0",
     "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4",
     "vite": "^5.4.8",

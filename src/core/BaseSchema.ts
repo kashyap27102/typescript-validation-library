@@ -30,16 +30,18 @@ export abstract class BaseSchemaImpl<T extends ValidTypes>
 
     // Check if the value is of the correct type
     const result = this.validateType(value);
-
+    console.log("Base Schema : ", result);
     if (result.success === false) {
       return { success: false, error: result.error };
     }
-
+    console.log(this.validators);
     if (this.validators.length !== 0) {
       const error = validate(value as T, this.validators);
 
       if (error) {
-        return { success: false, error };
+        console.log(error);
+
+        return { success: false, error: error };
       }
     }
 
