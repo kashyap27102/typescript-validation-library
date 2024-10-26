@@ -7,9 +7,7 @@ import { transform, validate } from "../utils/helper";
 import { ArraySchemaImpl } from "./ArraySchema";
 import { ArraySchema, BaseSchema, ValidTypes } from "./SchemaType";
 
-export abstract class BaseSchemaImpl<T extends ValidTypes>
-  implements BaseSchema<T>
-{
+export abstract class BaseSchemaImpl<T> implements BaseSchema<T> {
   isOptional: boolean = false;
   isNullable: boolean = false;
   protected validators: ValidationFn<T>[] = [];
@@ -30,17 +28,14 @@ export abstract class BaseSchemaImpl<T extends ValidTypes>
 
     // Check if the value is of the correct type
     const result = this.validateType(value);
-    console.log("Base Schema : ", result);
     if (result.success === false) {
       return { success: false, error: result.error };
     }
-    console.log(this.validators);
+
     if (this.validators.length !== 0) {
       const error = validate(value as T, this.validators);
 
       if (error) {
-        console.log(error);
-
         return { success: false, error: error };
       }
     }
@@ -61,8 +56,4 @@ export abstract class BaseSchemaImpl<T extends ValidTypes>
     this.isNullable = true;
     return this;
   }
-  // array(): ArraySchema<T> {
-  //   console.log("asdasd");
-  //   return new Array<T>() as unknown as ArraySchema<T>;
-  // }
 }

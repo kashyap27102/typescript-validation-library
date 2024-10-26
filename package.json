@@ -9,7 +9,7 @@
     "build": "vite  build",
     "start": "tsc && node 'dist/example.js'",
     "lint": "eslint 'src/**/*.ts'",
-    "test": "jest __test__/object.test.ts",
+    "test": "jest",
     "prepublishOnly": "npm run build"
   },
   "keywords": [],

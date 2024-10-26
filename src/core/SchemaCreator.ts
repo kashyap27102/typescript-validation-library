@@ -13,7 +13,6 @@ import {
   ObjectSchema,
   SchemaCreator,
   StringSchema,
-  UnionSchema,
   ValidEnum,
   ValidNull,
   ValidObject,
@@ -23,6 +22,7 @@ import {
 import { StringSchemaImpl } from "./StringSchema";
 import { UnionSchemaImpl } from "./UnionSchema";
 import { SchemaErrorType } from "../error/ErrorTypes";
+import { TupleSchemaImpl } from "./TupleSchema";
 
 // Main Entry Point as a Class
 export class SchemaCreatorImpl implements SchemaCreator {
@@ -57,8 +57,11 @@ export class SchemaCreatorImpl implements SchemaCreator {
   array<T extends ValidTypes>(schema: BaseSchema<T>): ArraySchema<T> {
     return new ArraySchemaImpl(schema);
   }
-  union(schemaArray: BaseSchema<ValidTypes>[]): UnionSchema {
-    return new UnionSchemaImpl(schemaArray);
+  union(schemas: BaseSchema<ValidTypes>[]): BaseSchema<ValidTypes>[] {
+    return new UnionSchemaImpl(schemas);
+  }
+  tuple<T extends BaseSchema<ValidTypes>[]>(tuple: [...T]) {
+    return new TupleSchemaImpl(tuple);
   }
 }
 

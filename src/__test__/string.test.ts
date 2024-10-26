@@ -44,4 +44,8 @@ describe("String Schema", () => {
       error: "Email is not in valid format",
     });
   });
+
+  // test("string infer type",()=>{
+  //   expect(inferty).toEqual()
+  // })
 });

@@ -16,7 +16,9 @@ export class BooleanSchemaImpl
     if (typeof value !== "boolean") {
       return {
         success: false,
-        error: this.obj.invalidTypeMsg || "Invalid type",
+        error:
+          this.obj.invalidTypeMsg ||
+          `Expected a boolean, but got ${typeof value}`,
       };
     }
     return { success: true, data: value };

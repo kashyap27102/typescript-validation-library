@@ -7,7 +7,7 @@ import {
 } from "../core/SchemaType";
 
 // Validation result
-export type ValidationResult<T extends ValidTypes> =
+export type ValidationResult<T> =
   | {
       success: true;
       data: T | T[];

@@ -17,7 +17,9 @@ export class NumberSchemaImpl
     if (typeof value !== "number") {
       return {
         success: false,
-        error: this.obj.invalidTypeMsg || "Invalid type, Expected Number",
+        error:
+          this.obj.invalidTypeMsg ||
+          `Expected a number, but got ${typeof value}`,
       };
     }
     return { success: true, data: value };

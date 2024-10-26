@@ -70,17 +70,7 @@ export type InferType<S> = S extends ArraySchema<infer T>
 // Generic interface for defining a schema
 // T is the type the schema is expected to validate (string, number, etc.)
 // It contains a `parse` method that takes an unknown value and returns a validation result of type T
-export interface BaseSchema<
-  T extends
-    | ValidString
-    | ValidNumber
-    | ValidBoolean
-    | ValidDate
-    | ValidObject
-    | ValidEnum
-    | ValidUndefined
-    | ValidNull
-> {
+export interface BaseSchema<T> {
   isOptional: ValidBoolean;
   isNullable: ValidBoolean;
   parse(value: unknown): ValidationResult<T>;
@@ -92,7 +82,6 @@ export interface BaseSchema<
 // It extends `BaseSchema<ValidString>` indicating that it validates strings
 // It includes methods for string-specific validation (e.g., `min`, `max`, `email`) and transformations like `trim`
 export interface StringSchema extends BaseSchema<ValidString> {
-  [x: string]: any;
   // Validation methods for string schema
   min: (length: number, obj?: ValidationErrorType) => StringSchema;
   max: (length: number, obj?: ValidationErrorType) => StringSchema;
@@ -140,21 +129,16 @@ export interface ObjectSchema extends BaseSchema<ValidObject> {
 // Interface for defining a schema for arrays
 // Extends `BaseSchema<ValidArr<T>>`, where `T` is the type of the elements inside the array
 // It means the schema will validate arrays where all elements are of type `T`
-export interface ArraySchema<T extends ValidTypes> extends BaseSchema<T> {
+export interface ArraySchema<T> extends BaseSchema<T> {
   nonempty(): ArraySchema<T>;
   min(length: number, obj?: ValidationErrorType): ArraySchema<T>;
   max(length: number, obj?: ValidationErrorType): ArraySchema<T>;
   length(length: number, obj?: ValidationErrorType): ArraySchema<T>;
 }
 
-// export interface OptionalSchema<T> {
-//   optional: (schema: T) => T | undefined;
-// }
-
-// A union type of possible schemas that can be part of a union array
-export interface UnionSchema extends BaseSchema<ValidTypes> {
-  // union: (schemaArray: BaseSchema<ValidTypes>[]) => UnionSchema;
-}
+// Interface for defining a schema for unions
+// Extends `BaseSchema<ValidUnion>`, meaning it validates values that can be any of the types in the union
+export interface UnionSchema extends BaseSchema<ValidUnion> {}
 
 // Main Schema Creator Interface
 // Provides factory methods to create different schemas (string, number, boolean, etc.)
@@ -173,5 +157,6 @@ export interface SchemaCreator {
   array: <T extends ValidTypes>(
     schema: BaseSchema<T> // Pass the schema for array elements
   ) => ArraySchema<T>; // Creates an array schema
-  union: (schemaArray: BaseSchema<ValidTypes>[]) => UnionSchema;
+  union: (schemaArray: BaseSchema<ValidTypes>[]) => BaseSchema<ValidTypes>[];
+  tuple: (schemaArray: BaseSchema<ValidTypes>[]) => BaseSchema<ValidTypes>[];
 }

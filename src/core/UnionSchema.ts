@@ -1,24 +1,16 @@
 import { ValidationResult } from "../utils/UtilityTypes";
 import { BaseSchemaImpl } from "./BaseSchema";
-import {
-  BaseSchema,
-  InferType,
-  UnionSchema,
-  ValidString,
-  ValidTypes,
-} from "./SchemaType";
+import { BaseSchema, InferType, ValidString, ValidTypes } from "./SchemaType";
 
-export class UnionSchemaImpl
-  extends BaseSchemaImpl<ValidString>
-  implements UnionSchema
-{
-  constructor(private schemaArray: BaseSchema<ValidTypes>[]) {
+export class UnionSchemaImpl<
+  T extends BaseSchema<ValidTypes>[]
+> extends BaseSchemaImpl<T> {
+  constructor(private schemas: BaseSchema<ValidTypes>[]) {
     super();
-    this.schemaArray = schemaArray;
   }
 
   protected validateType(value: unknown): ValidationResult<any> {
-    for (const schema of this.schemaArray) {
+    for (const schema of this.schemas) {
       const result = schema.parse(value);
       if (result.success) {
         return {

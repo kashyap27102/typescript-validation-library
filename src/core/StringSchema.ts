@@ -17,7 +17,9 @@ export class StringSchemaImpl
     if (typeof value !== "string") {
       return {
         success: false,
-        error: this.obj.invalidTypeMsg || "Expected String",
+        error:
+          this.obj.invalidTypeMsg ||
+          `Expected a string, but got ${typeof value}`,
       };
     }
     return { success: true, data: value };

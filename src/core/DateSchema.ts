@@ -18,7 +18,8 @@ export class DateSchemaImpl
     if (isNaN(date.getTime())) {
       return {
         success: false,
-        error: this.obj.invalidTypeMsg || "Invalid date format",
+        error:
+          this.obj.invalidTypeMsg || `Expected a date, but got ${typeof value}`,
       };
     }
     return { success: true, data: new Date(value as string) };
