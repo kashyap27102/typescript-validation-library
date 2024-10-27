@@ -1,5 +1,5 @@
 // write a test cases for boolean schema
-import v from '../core/SchemaCreator';
+import v from '../';
 
 describe('Boolean Schema', () => {
   test('boolean schema validation', () => {
@@ -10,7 +10,7 @@ describe('Boolean Schema', () => {
   });
   test('boolean schema validation with error message', () => {
     expect(
-      v.boolean({ invalidTypeMsg: 'Value is not a boolean' }).parse(20),
+      v.boolean({ invalidTypeMsg: 'Value is not a boolean' }).parse(20)
     ).toEqual({
       success: false,
       error: 'Value is not a boolean',

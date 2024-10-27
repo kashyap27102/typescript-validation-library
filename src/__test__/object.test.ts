@@ -1,4 +1,4 @@
-import v from '../core/SchemaCreator';
+import v from '../';
 
 describe('Object Schema', () => {
   test('object schema validation', () => {
@@ -15,7 +15,7 @@ describe('Object Schema', () => {
           age: 20,
           isAdult: true,
           email: 'Jhone@gmail.com',
-        }),
+        })
     ).toEqual({
       success: true,
       data: {
@@ -40,7 +40,7 @@ describe('Object Schema', () => {
         .parse({
           name: 'Jhone',
           age: 20,
-        }),
+        })
     ).toEqual({
       success: false,
       error: 'Some fields are missing', // Replace with a specific error message if needed
@@ -62,7 +62,7 @@ describe('Object Schema', () => {
           age: 20,
           isAdult: true,
           email: 'Jhone.com', // Invalid email format
-        }),
+        })
     ).toEqual({
       success: false,
       error: 'Email is not in valid format', // Replace with a specific error message if needed

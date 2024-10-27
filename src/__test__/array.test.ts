@@ -1,4 +1,4 @@
-import v from '../schemas/SchemaCreator';
+import v from '../';
 
 describe('Array', () => {
   test('Array Schema validation', () => {

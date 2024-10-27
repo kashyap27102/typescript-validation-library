@@ -1,4 +1,4 @@
-import v from '../index';
+import v from '../';
 
 describe('Enum Schema', () => {
   test('should validate enum', () => {

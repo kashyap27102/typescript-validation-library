@@ -1,4 +1,4 @@
-import v from '../schemas/SchemaCreator'; // Assuming this is where the schema creation utility resides.
+import v from '../'; 
 
 describe('Tuple Schema', () => {
   test('valid tuple schema validation', () => {
