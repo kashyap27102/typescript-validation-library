@@ -1,8 +1,10 @@
 import { SchemaErrorType } from '../error/ErrorTypes';
-import { ValidationResult } from '../utils/typeUtils';
+import {
+  BooleanSchema,
+  ValidationResult,
+  ValidBoolean,
+} from '../utils/typeUtils';
 import { BaseSchemaImpl } from './BaseSchema';
-import { ValidBoolean } from './SchemaType';
-import { BooleanSchema } from './SchemaType';
 
 export class BooleanSchemaImpl
   extends BaseSchemaImpl<ValidBoolean>
