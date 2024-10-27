@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 // Import error and validation result types
-import { SchemaErrorType, ValidationErrorType } from "../error/ErrorTypes";
-import { ValidationResult } from "../utils/UtilityTypes";
+import { SchemaErrorType, ValidationErrorType } from '../error/ErrorTypes';
 
 // Defining primitive types that schemas can validate
 export type ValidString = string; // Represents a string type
@@ -18,23 +18,17 @@ export type ValidTypes =
   | ValidDate
   | ValidUndefined
   | ValidNull
-  | ValidEnum
   | ValidObject;
 
 // A valid enum type is defined as an array of strings
 // This will be used to create an enum schema
-export type ValidEnum = string[];
+export type ValidEnum<T extends readonly string[]> = T[number];
 
 // A valid object type for an object schema
 // The object contains properties with different possible schema types
 // The schema types can be StringSchema, NumberSchema, DateSchema, BooleanSchema, or even another ObjectSchema
 export type ValidObject = {
-  [key: string]:
-    | StringSchema
-    | NumberSchema
-    | DateSchema
-    | BooleanSchema
-    | ObjectSchema;
+  [key: string]: BaseSchema<ValidTypes>;
 };
 
 export type ValidUnion = ValidTypes[];
@@ -42,30 +36,31 @@ export type ValidUnion = ValidTypes[];
 // Infers the type that a schema is validating
 // This helps extract the type that each schema is supposed to validate
 // Example: if `S` is a `StringSchema`, it returns `ValidString` (i.e., `string`)
-export type InferType<S> = S extends ArraySchema<infer T>
-  ? T[]
-  : S extends BaseSchema<infer T>
-  ? T
-  : S extends StringSchema
-  ? ValidString // If it's a StringSchema, the type is string
-  : S extends NumberSchema
-  ? ValidNumber // If it's a NumberSchema, the type is number
-  : S extends BooleanSchema
-  ? ValidBoolean // If it's a BooleanSchema, the type is boolean
-  : S extends DateSchema
-  ? ValidDate // If it's a DateSchema, the type is Date
-  : S extends EnumSchema
-  ? ValidEnum // If it's an EnumSchema, the type is string[]
-  : S extends ArraySchema<infer T>
-  ? T // If it's an ArraySchema, infer the element type (T) from the array
-  : S extends ObjectSchema
-  ? { [K in keyof S["shape"]]: InferType<S["shape"][K]> }
-  : // If it's an ObjectSchema, recursively infer types for each property in the shape
-  S extends ValidUndefined
-  ? undefined // If it's undefined, return undefined
-  : S extends ValidNull
-  ? null // If it's null, return null
-  : never; // For any other case, return `never`
+export type InferType<S> =
+  S extends ArraySchema<infer T>
+    ? T[]
+    : S extends BaseSchema<infer T>
+      ? T
+      : S extends StringSchema
+        ? ValidString // If it's a StringSchema, the type is string
+        : S extends NumberSchema
+          ? ValidNumber // If it's a NumberSchema, the type is number
+          : S extends BooleanSchema
+            ? ValidBoolean // If it's a BooleanSchema, the type is boolean
+            : S extends DateSchema
+              ? ValidDate // If it's a DateSchema, the type is Date
+              : S extends EnumSchema<infer T>
+                ? T // If it's an EnumSchema, the type is string[]
+                : S extends ArraySchema<infer T>
+                  ? T // If it's an ArraySchema, infer the element type (T) from the array
+                  : S extends ObjectSchema<infer Shape>
+                    ? { [K in keyof Shape]: InferType<Shape[K]> }
+                    : // If it's an ObjectSchema, recursively infer types for each property in the shape
+                      S extends ValidUndefined
+                      ? undefined // If it's undefined, return undefined
+                      : S extends ValidNull
+                        ? null // If it's null, return null
+                        : never; // For any other case, return `never`
 
 // Generic interface for defining a schema
 // T is the type the schema is expected to validate (string, number, etc.)
@@ -115,15 +110,17 @@ export interface DateSchema extends BaseSchema<ValidDate> {
 
 // Interface for defining a schema for enums
 // Extends `BaseSchema<ValidEnum>`, meaning it validates enums (arrays of strings)
-export interface EnumSchema extends BaseSchema<ValidEnum> {}
+export interface EnumSchema<T extends readonly string[]>
+  extends BaseSchema<ValidEnum<T>> {}
 
 // Interface for defining a schema for objects
 // Extends `BaseSchema<ValidObject>`, meaning it validates objects
 // Includes a `shape` property that defines the structure of the object and an `extends` method to extend the shape
-export interface ObjectSchema extends BaseSchema<ValidObject> {
-  shape: ValidObject; // Defines the structure of the object schema
-  extends: (shape: ValidObject) => ObjectSchema; // Method to extend the object schema with additional fields
-  keyof: () => EnumSchema; // Method to get the keys of the object schema
+export interface ObjectSchema<Shape extends ValidObject>
+  extends BaseSchema<{ [K in keyof Shape]: InferType<Shape[K]> }> {
+  shape: Shape; // Defines the structure of the object schema
+  extends: (shape: ValidObject) => ObjectSchema<Shape & ValidObject>; // Method to extend the object schema with additional fields
+  keyof: () => string[]; // Method to get the keys of the object schema
 }
 
 // Interface for defining a schema for arrays
@@ -138,7 +135,14 @@ export interface ArraySchema<T> extends BaseSchema<T> {
 
 // Interface for defining a schema for unions
 // Extends `BaseSchema<ValidUnion>`, meaning it validates values that can be any of the types in the union
-export interface UnionSchema extends BaseSchema<ValidUnion> {}
+export interface UnionSchema<T extends ValidTypes[]>
+  extends BaseSchema<T[number]> {}
+
+// Interface for defining a schema for tuples
+// Extends `BaseSchema<[ValidTypes]>`, meaning it validates arrays with fixed types at each index
+export interface TupleSchema<T extends ValidTypes[]> extends BaseSchema<T> {
+  // length: T["length"]; // The fixed length of the tuple
+}
 
 // Main Schema Creator Interface
 // Provides factory methods to create different schemas (string, number, boolean, etc.)
@@ -147,16 +151,43 @@ export interface SchemaCreator {
   number: (obj?: SchemaErrorType) => BaseSchema<ValidNumber>; // Creates a number schema
   boolean: (obj?: SchemaErrorType) => BaseSchema<ValidBoolean>; // Creates a boolean schema
   date: (obj?: SchemaErrorType) => BaseSchema<ValidDate>; // Creates a date schema
+  enum: <T extends readonly string[]>(
+    values: T,
+    obj?: SchemaErrorType,
+  ) => EnumSchema<T>; // Creates an enum schema
   optional: <T extends ValidTypes>(
-    schema: BaseSchema<T>
+    schema: BaseSchema<T>,
   ) => BaseSchema<T | ValidUndefined>; // Creates an optional schema
   nullable: <T extends ValidTypes>(
-    schema: BaseSchema<T>
+    schema: BaseSchema<T>,
   ) => BaseSchema<T | ValidNull>;
-  object: (shape: ValidObject, obj?: SchemaErrorType) => ObjectSchema; // Creates an object schema
+  object: <Shape extends ValidObject>(
+    shape: Shape,
+    obj?: SchemaErrorType,
+  ) => ObjectSchema<Shape>; // Creates an object schema
   array: <T extends ValidTypes>(
-    schema: BaseSchema<T> // Pass the schema for array elements
+    schema: BaseSchema<T>, // Pass the schema for array elements
   ) => ArraySchema<T>; // Creates an array schema
-  union: (schemaArray: BaseSchema<ValidTypes>[]) => BaseSchema<ValidTypes>[];
-  tuple: (schemaArray: BaseSchema<ValidTypes>[]) => BaseSchema<ValidTypes>[];
+  union: <T extends ValidTypes[]>(schemas: {
+    [K in keyof T]: BaseSchema<T[K]>;
+  }) => UnionSchema<T>;
+  tuple: <T extends ValidTypes[]>(schemas: {
+    [K in keyof T]: BaseSchema<T[K]>;
+  }) => TupleSchema<T>; // Creates a tuple schema
 }
+// Validation result
+export type ValidationResult<T> =
+  | {
+      success: true;
+      data: T | T[];
+    }
+  | {
+      success: false;
+      error: string;
+    };
+
+// Validation function
+export type ValidationFn<T> = (value: T) => string | null;
+
+// Transformer function
+export type TransformerFn<T> = (value: T) => T;

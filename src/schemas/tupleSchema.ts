@@ -1,11 +1,8 @@
-import { ValidationResult } from "../utils/UtilityTypes";
-import { BaseSchemaImpl } from "./BaseSchema";
-import { BaseSchema, InferType, ValidTypes } from "./SchemaType";
+import { BaseSchemaImpl } from './BaseSchema';
+import { BaseSchema, ValidationResult, ValidTypes } from '../utils/typeUtils';
 
-export class TupleSchemaImpl<
-  T extends BaseSchema<ValidTypes>[]
-> extends BaseSchemaImpl<T> {
-  constructor(private tuple: [...T]) {
+export class TupleSchemaImpl<T extends ValidTypes[]> extends BaseSchemaImpl<T> {
+  constructor(private tuple: { [K in keyof T]: BaseSchema<T[K]> }) {
     super();
   }
 

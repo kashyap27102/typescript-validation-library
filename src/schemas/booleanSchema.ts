@@ -1,8 +1,8 @@
-import { SchemaErrorType } from "../error/ErrorTypes";
-import { ValidationResult } from "../utils/UtilityTypes";
-import { BaseSchemaImpl } from "./BaseSchema";
-import { ValidBoolean } from "./SchemaType";
-import { BooleanSchema } from "./SchemaType";
+import { SchemaErrorType } from '../error/ErrorTypes';
+import { ValidationResult } from '../utils/typeUtils';
+import { BaseSchemaImpl } from './BaseSchema';
+import { ValidBoolean } from './SchemaType';
+import { BooleanSchema } from './SchemaType';
 
 export class BooleanSchemaImpl
   extends BaseSchemaImpl<ValidBoolean>
@@ -13,7 +13,7 @@ export class BooleanSchemaImpl
   }
 
   validateType(value: unknown): ValidationResult<boolean> {
-    if (typeof value !== "boolean") {
+    if (typeof value !== 'boolean') {
       return {
         success: false,
         error:

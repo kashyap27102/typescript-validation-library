@@ -1,37 +1,41 @@
-import v from "../core/SchemaCreator"; // Assuming this is where the schema creation utility resides.
+import v from '../schemas/SchemaCreator'; // Assuming this is where the schema creation utility resides.
 
-describe("Tuple Schema", () => {
-  test("valid tuple schema validation", () => {
+describe('Tuple Schema', () => {
+  test('valid tuple schema validation', () => {
     // Correct types and length
     expect(
-      v.tuple([v.number(), v.string(), v.boolean()]).parse([123, "Hello", true])
+      v
+        .tuple([v.number(), v.string(), v.boolean()])
+        .parse([123, 'Hello', true]),
     ).toStrictEqual({
       success: true,
-      data: [123, "Hello", true],
+      data: [123, 'Hello', true],
     });
   });
 
-  test("invalid tuple schema - incorrect type", () => {
+  test('invalid tuple schema - incorrect type', () => {
     // One of the types is incorrect (string instead of number)
     expect(
-      v.tuple([v.number(), v.string(), v.boolean()]).parse(["Hello", 123, true])
+      v
+        .tuple([v.number(), v.string(), v.boolean()])
+        .parse(['Hello', 123, true]),
     ).toStrictEqual({
       success: false,
-      error: "Error at index 0: Expected a number, but got string", // Customize based on your error messages
+      error: 'Error at index 0: Expected a number, but got string', // Customize based on your error messages
     });
   });
 
-  test("invalid tuple schema - incorrect length", () => {
+  test('invalid tuple schema - incorrect length', () => {
     // The tuple is shorter than expected
     expect(
-      v.tuple([v.number(), v.string(), v.boolean()]).parse([123, "Hello"])
+      v.tuple([v.number(), v.string(), v.boolean()]).parse([123, 'Hello']),
     ).toStrictEqual({
       success: false,
-      error: "Expected an array of length 3, but got 2", // Error for length mismatch
+      error: 'Expected an array of length 3, but got 2', // Error for length mismatch
     });
   });
 
-  test("empty tuple validation", () => {
+  test('empty tuple validation', () => {
     // Empty tuple (no elements expected)
     expect(v.tuple([]).parse([])).toStrictEqual({
       success: true,
@@ -39,11 +43,11 @@ describe("Tuple Schema", () => {
     });
   });
 
-  test("invalid empty tuple - wrong input", () => {
+  test('invalid empty tuple - wrong input', () => {
     // Tuple expects no elements but receives some
     expect(v.tuple([]).parse([123])).toStrictEqual({
       success: false,
-      error: "Expected an array of length 0, but got 1",
+      error: 'Expected an array of length 0, but got 1',
     });
   });
 

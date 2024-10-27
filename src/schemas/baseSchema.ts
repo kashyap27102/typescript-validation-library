@@ -2,10 +2,9 @@ import {
   TransformerFn,
   ValidationFn,
   ValidationResult,
-} from "../utils/UtilityTypes";
-import { transform, validate } from "../utils/helper";
-import { ArraySchemaImpl } from "./ArraySchema";
-import { ArraySchema, BaseSchema, ValidTypes } from "./SchemaType";
+} from '../utils/typeUtils';
+import { transform, validate } from '../utils/helper';
+import { ArraySchema, BaseSchema } from '../utils/typeUtils';
 
 export abstract class BaseSchemaImpl<T> implements BaseSchema<T> {
   isOptional: boolean = false;
@@ -17,7 +16,7 @@ export abstract class BaseSchemaImpl<T> implements BaseSchema<T> {
 
   parse(value: unknown): ValidationResult<T> {
     // Check if the value is undefined
-    if (this.isOptional && typeof value === "undefined") {
+    if (this.isOptional && typeof value === 'undefined') {
       return { success: true, data: undefined as T };
     }
 

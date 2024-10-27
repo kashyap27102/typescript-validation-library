@@ -1,8 +1,8 @@
-import { SchemaErrorType, ValidationErrorType } from "../error/ErrorTypes";
-import { ValidationResult } from "../utils/UtilityTypes";
-import { DefaultValidationError, transform, validate } from "../utils/helper";
-import { BaseSchemaImpl } from "./BaseSchema";
-import { DateSchema, ValidBoolean, ValidDate } from "./SchemaType";
+import { SchemaErrorType, ValidationErrorType } from '../error/ErrorTypes';
+import { ValidationResult } from '../utils/typeUtils';
+import { DefaultValidationError } from '../utils/helper';
+import { BaseSchemaImpl } from './BaseSchema';
+import { DateSchema, ValidDate } from './SchemaType';
 
 export class DateSchemaImpl
   extends BaseSchemaImpl<ValidDate>
@@ -26,7 +26,7 @@ export class DateSchemaImpl
   }
 
   past(
-    obj: ValidationErrorType = DefaultValidationError.DATE_PAST
+    obj: ValidationErrorType = DefaultValidationError.DATE_PAST,
   ): DateSchema {
     this.validators.push((value: Date) => {
       const currentDate = new Date();
@@ -36,7 +36,7 @@ export class DateSchemaImpl
   }
 
   future(
-    obj: ValidationErrorType = DefaultValidationError.DATE_PAST
+    obj: ValidationErrorType = DefaultValidationError.DATE_PAST,
   ): DateSchema {
     this.validators.push((value: Date) => {
       const currentDate = new Date();

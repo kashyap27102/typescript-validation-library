@@ -1,9 +1,11 @@
-import { SchemaErrorType, ValidationErrorType } from "../error/ErrorTypes";
-import { ValidationResult } from "../utils/UtilityTypes";
-import { DefaultValidationError } from "../utils/helper";
-import { ArraySchemaImpl } from "./ArraySchema";
-import { BaseSchemaImpl } from "./BaseSchema";
-import { StringSchema, ValidString } from "./SchemaType";
+import { SchemaErrorType, ValidationErrorType } from '../error/ErrorTypes';
+import {
+  StringSchema,
+  ValidString,
+  ValidationResult,
+} from '../utils/typeUtils';
+import { DefaultValidationError } from '../utils/helper';
+import { BaseSchemaImpl } from './BaseSchema';
 
 export class StringSchemaImpl
   extends BaseSchemaImpl<ValidString>
@@ -14,7 +16,7 @@ export class StringSchemaImpl
   }
 
   validateType(value: unknown): ValidationResult<ValidString> {
-    if (typeof value !== "string") {
+    if (typeof value !== 'string') {
       return {
         success: false,
         error:
@@ -27,10 +29,10 @@ export class StringSchemaImpl
 
   min(
     length: number,
-    validation: ValidationErrorType = DefaultValidationError.STRING_MIN(length)
+    validation: ValidationErrorType = DefaultValidationError.STRING_MIN(length),
   ): StringSchema {
     this.validators.push((value: string) =>
-      value.length >= length ? null : validation.message
+      value.length >= length ? null : validation.message,
     );
 
     return this;
@@ -38,20 +40,20 @@ export class StringSchemaImpl
 
   max(
     length: number,
-    validation: ValidationErrorType = DefaultValidationError.STRING_MAX(length)
+    validation: ValidationErrorType = DefaultValidationError.STRING_MAX(length),
   ): StringSchema {
     this.validators.push((value: string) =>
-      value.length <= length ? null : validation.message
+      value.length <= length ? null : validation.message,
     );
 
     return this;
   }
 
   email(
-    validation: ValidationErrorType = DefaultValidationError.STRING_EMAIL
+    validation: ValidationErrorType = DefaultValidationError.STRING_EMAIL,
   ): StringSchema {
     this.validators.push((value: string) =>
-      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? null : validation.message
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? null : validation.message,
     );
     return this;
   }
