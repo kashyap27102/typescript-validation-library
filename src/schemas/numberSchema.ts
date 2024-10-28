@@ -1,8 +1,8 @@
 import { SchemaErrorType, ValidationErrorType } from '../error/ErrorTypes';
 import { ValidationResult } from '../utils/typeUtils';
 import { DefaultValidationError } from '../utils/helper';
-import { BaseSchemaImpl } from './BaseSchema';
-import { NumberSchema, ValidNumber } from './SchemaType';
+import { BaseSchemaImpl } from './baseSchema';
+import { NumberSchema, ValidNumber } from '../utils/typeUtils';
 
 export class NumberSchemaImpl
   extends BaseSchemaImpl<ValidNumber>

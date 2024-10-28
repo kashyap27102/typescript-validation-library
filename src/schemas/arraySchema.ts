@@ -1,5 +1,5 @@
 import { DefaultValidationError } from '../utils/helper';
-import { BaseSchemaImpl } from './BaseSchema';
+import { BaseSchemaImpl } from './baseSchema';
 import {
   ArraySchema,
   BaseSchema,

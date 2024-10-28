@@ -4,7 +4,7 @@ import {
   ValidationResult,
   ValidBoolean,
 } from '../utils/typeUtils';
-import { BaseSchemaImpl } from './BaseSchema';
+import { BaseSchemaImpl } from './baseSchema';
 
 export class BooleanSchemaImpl
   extends BaseSchemaImpl<ValidBoolean>

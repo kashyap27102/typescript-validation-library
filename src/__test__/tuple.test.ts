@@ -1,4 +1,4 @@
-import v from '../'; 
+import v from '../';
 
 describe('Tuple Schema', () => {
   test('valid tuple schema validation', () => {

@@ -120,7 +120,7 @@ export interface ObjectSchema<Shape extends ValidObject>
   extends BaseSchema<{ [K in keyof Shape]: InferType<Shape[K]> }> {
   shape: Shape; // Defines the structure of the object schema
   extends: (shape: ValidObject) => ObjectSchema<Shape & ValidObject>; // Method to extend the object schema with additional fields
-  keyof: () => string[]; // Method to get the keys of the object schema
+  keyof: () => EnumSchema<string[]>; // Method to get the keys of the object schema
 }
 
 // Interface for defining a schema for arrays

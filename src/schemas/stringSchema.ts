@@ -5,7 +5,7 @@ import {
   ValidationResult,
 } from '../utils/typeUtils';
 import { DefaultValidationError } from '../utils/helper';
-import { BaseSchemaImpl } from './BaseSchema';
+import { BaseSchemaImpl } from './baseSchema';
 
 export class StringSchemaImpl
   extends BaseSchemaImpl<ValidString>

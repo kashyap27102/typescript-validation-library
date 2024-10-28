@@ -1,23 +1,20 @@
 import { SchemaCreatorImpl } from './schemaCreator';
 
-export * from './schemas/ArraySchema';
-export * from './schemas/StringSchema';
-export * from './schemas/BooleanSchema';
-export * from './schemas/DateSchema';
-export * from './schemas/NumberSchema';
-export * from './schemas/ObjectSchema';
-export * from './schemas/TupleSchema';
-export * from './schemas/UnionSchema';
-export * from './schemas/EnumSchema';
-
-export * from './schemas/BaseSchema';
-
+export * from './schemas/arraySchema';
+export * from './schemas/stringSchema';
+export * from './schemas/booleanSchema';
+export * from './schemas/dateSchema';
+export * from './schemas/numberSchema';
+export * from './schemas/objectSchema';
+export * from './schemas/tupleSchema';
+export * from './schemas/unionSchema';
+export * from './schemas/enumSchema';
+export * from './schemas/baseSchema';
 export * from './utils/typeUtils';
 export * from './utils/helper';
-
 export * from './error/ErrorTypes';
 export * from './error/error';
-
 export * from './schemaCreator';
 
-export default new SchemaCreatorImpl();
+const v = new SchemaCreatorImpl();
+export default v;

@@ -1,6 +1,6 @@
 import { SchemaErrorType } from '../error/ErrorTypes';
 import { ValidationResult } from '../utils/typeUtils';
-import { BaseSchemaImpl } from './BaseSchema';
+import { BaseSchemaImpl } from './baseSchema';
 import { EnumSchema, ValidEnum } from '../utils/typeUtils';
 
 export class EnumSchemaImpl<T extends readonly string[]>

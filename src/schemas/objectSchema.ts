@@ -1,7 +1,8 @@
 import { SchemaErrorType } from '../error/ErrorTypes';
-import { ValidationResult } from '../utils/typeUtils';
-import { BaseSchemaImpl } from './BaseSchema';
+import { EnumSchema, ValidationResult } from '../utils/typeUtils';
+import { BaseSchemaImpl } from './baseSchema';
 import { ObjectSchema, ValidObject, InferType } from '../utils/typeUtils';
+import { EnumSchemaImpl } from './enumSchema';
 
 export class ObjectSchemaImpl<Shape extends ValidObject>
   extends BaseSchemaImpl<{ [K in keyof Shape]: InferType<Shape[K]> }>
@@ -14,8 +15,8 @@ export class ObjectSchemaImpl<Shape extends ValidObject>
     super();
   }
 
-  keyof(): string[] {
-    return Object.keys(this.shape);
+  keyof(): EnumSchema<string[]> {
+    return new EnumSchemaImpl(Object.keys(this.shape));
   }
 
   validateType(

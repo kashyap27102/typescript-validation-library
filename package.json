@@ -1,5 +1,5 @@
 {
-  "name": "typescript-lib",
+  "name": "typescript-validation-library",
   "version": "1.0.0",
   "description": "",
   "main": "./dist/index.js",
@@ -7,7 +7,7 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "vite  build",
-    "start": "tsc && node 'dist/index.js'",
+    "start": "tsc && node dist/examples/01.js",
     "lint": "eslint src/**/*.ts",
     "test": "jest ",
     "format": "prettier --write src/**/*.ts",
@@ -19,6 +19,10 @@
   "license": "ISC",
   "devDependencies": {
     "@eslint/js": "^9.13.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^11.0.0",
+    "@semantic-release/npm": "^12.0.1",
     "@types/jest": "^29.5.13",
     "@typescript-eslint/eslint-plugin": "^8.4.0",
     "@typescript-eslint/parser": "^8.4.0",
@@ -27,6 +31,7 @@
     "husky": "^9.1.6",
     "jest": "^29.7.0",
     "lint-staged": "^15.2.10",
+    "semantic-release": "^24.2.0",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4",

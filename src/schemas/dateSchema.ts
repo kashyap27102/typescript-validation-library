@@ -1,8 +1,7 @@
 import { SchemaErrorType, ValidationErrorType } from '../error/ErrorTypes';
-import { ValidationResult } from '../utils/typeUtils';
+import { DateSchema, ValidationResult, ValidDate } from '../utils/typeUtils';
 import { DefaultValidationError } from '../utils/helper';
-import { BaseSchemaImpl } from './BaseSchema';
-import { DateSchema, ValidDate } from './SchemaType';
+import { BaseSchemaImpl } from './baseSchema';
 
 export class DateSchemaImpl
   extends BaseSchemaImpl<ValidDate>

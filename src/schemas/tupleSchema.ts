@@ -1,4 +1,4 @@
-import { BaseSchemaImpl } from './BaseSchema';
+import { BaseSchemaImpl } from './baseSchema';
 import { BaseSchema, ValidationResult, ValidTypes } from '../utils/typeUtils';
 
 export class TupleSchemaImpl<T extends ValidTypes[]> extends BaseSchemaImpl<T> {
