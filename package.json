@@ -60,5 +60,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/kashyap27102/typescript-validation-library"
+  },
+  "dependencies": {
+    "prettier": "^3.3.3"
   }
 }
