@@ -1,10 +1,13 @@
 {
   "name": "typescript-validation-library",
   "version": "1.0.0",
-  "description": "",
+  "description": "A flexible and powerful TypeScript-first validation library for building schema-based validation in JavaScript and TypeScript applications.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
   "scripts": {
     "build": "vite  build",
     "start": "tsc && node dist/examples/01.js",
@@ -14,9 +17,15 @@
     "prepublishOnly": "npm run build",
     "prepare": "husky"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "validation",
+    "schema",
+    "validation-library",
+    "typescript",
+    "javascript"
+  ],
+  "author": "Kashyap Patel",
+  "license": "MIT",
   "devDependencies": {
     "@eslint/js": "^9.13.0",
     "@semantic-release/changelog": "^6.0.3",
@@ -44,5 +53,12 @@
       "npm run lint",
       "npm run format"
     ]
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kashyap27102/typescript-validation-library"
   }
 }
