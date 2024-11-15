@@ -10,12 +10,11 @@
   ],
   "scripts": {
     "build": "vite  build",
-    "start": "tsc && node dist/examples/01.js",
     "lint": "eslint src/**/*.ts",
     "test": "jest ",
     "format": "prettier --write src/**/*.ts",
     "prepublishOnly": "npm run build",
-    "prepare": "husky"
+    "prepare": "husky || true"
   },
   "keywords": [
     "validation",
@@ -60,8 +59,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/kashyap27102/typescript-validation-library"
-  },
-  "dependencies": {
-    "prettier": "^3.3.3"
   }
 }
