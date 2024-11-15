@@ -1,4 +1,5 @@
 import { SchemaCreatorImpl } from './schemaCreator';
+export { SchemaCreatorImpl };
 
 export * from './schemas/arraySchema';
 export * from './schemas/stringSchema';
@@ -16,5 +17,4 @@ export * from './error/ErrorTypes';
 export * from './error/error';
 export * from './schemaCreator';
 
-const v = new SchemaCreatorImpl();
-export default v;
+export default new SchemaCreatorImpl();
