@@ -1,5 +1,5 @@
 {
-  "name": "typescript-validation-library",
+  "name": "ts-validation-library",
   "version": "1.0.0",
   "description": "A flexible and powerful TypeScript-first validation library for building schema-based validation in JavaScript and TypeScript applications.",
   "main": "./dist/index.js",
@@ -14,7 +14,7 @@
     "test": "jest ",
     "format": "prettier --write src/**/*.ts",
     "prepublishOnly": "npm run build",
-    "prepare": "husky || true"
+    "prepare": "husky"
   },
   "keywords": [
     "validation",
